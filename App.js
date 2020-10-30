@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, FlatList, ToastAndroid }  from 'react-native'
+import { View, Text, StyleSheet, FlatList, ToastAndroid, Alert, Button }  from 'react-native'
 import AddItem from './components/AddItem';
 // import { uuid } from 'uuidv4';
 import Header from './components/Header';
@@ -22,10 +22,22 @@ const App = () => {
   //   ToastAndroid.show("HEllo"+id, ToastAndroid.SHORT);
   // }
 
+  const addItem = (text) => {
+    if(!text){
+      Alert.alert('Error', 'Please add item', [{text:'OK'}], {cancelable:false})
+      // ToastAndroid.show("Error", ToastAndroid.SHORT);
+    }else{
+      setItems(prevItems => {
+        return [{id: 4, text}, ...prevItems];
+      })
+    }
+    
+  }
+
   return (
     <View style={styles.container}>
       <Header title='Shopping List'/>
-      <AddItem />
+      <AddItem addItem={addItem}/>
       <FlatList 
       data={items}
       renderItem={({item}) => <ListItem item={item} deleteItem={deleteItem} /> } />
